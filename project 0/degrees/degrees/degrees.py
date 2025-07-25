@@ -104,18 +104,29 @@ def shortest_path(source, target):
             return None
         #remove first item 
         node = frontier.remove()
+        #check if node.state is target node
+        #create connection list connecting actors
+        connections = []
         if node.state == target:
-            path = []
             while node.parent is not None:
-                path.append((node.action, node.state))
+                connections.append((node.action, node.state))
                 node = node.parent
-            path.reverse()
-            return path
+            connections.reverse()
+            return connections
         #mark node as explored
         explored.add(node.state)
 
+        #loop thorugh and find potential connections
         for action, state in neighbors_for_person(node.state):
+            # check that connection hasn't been explored
             if not frontier.contains_state(state) and state not in explored:
+                # if connection is target, return connections
+                if(state==target):
+                    while node.parent is not None:
+                        connections.append((node.action, node.state))
+                        node = node.parent
+                    connections.reverse()
+                    return connections
                 child = Node(state=state, parent=node, action=action)
                 frontier.add(child)
 
