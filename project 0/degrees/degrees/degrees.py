@@ -122,7 +122,7 @@ def shortest_path(source, target):
             if not frontier.contains_state(state) and state not in explored:
                 # if connection is target, return connections
                 if(state==target):
-                    connections.append((node.action, node.state))
+                    connections.append((action, state))
                     while node.parent is not None:
                         connections.append((node.action, node.state))
                         node = node.parent
