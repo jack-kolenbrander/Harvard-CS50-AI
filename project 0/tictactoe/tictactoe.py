@@ -67,6 +67,8 @@ def result(board, action):
     """
     Returns the board that results from making move (i, j) on the board.
     """
+    if (action[0] > 2 or action[0] < 0) or (action[1] > 2 or action[1] < 0):
+        raise IndexError("Out of bound action requested")
     # create copy of board
     new_board = copy.deepcopy(board)
     #check who's turn it is
