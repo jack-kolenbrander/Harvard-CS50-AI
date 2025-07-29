@@ -69,6 +69,8 @@ def result(board, action):
     """
     if (action[0] > 2 or action[0] < 0) or (action[1] > 2 or action[1] < 0):
         raise IndexError("Out of bound action requested")
+    elif board[action[0]][action[1]] != EMPTY:
+        raise IndexError("Requested move in taken space")
     # create copy of board
     new_board = copy.deepcopy(board)
     #check who's turn it is
