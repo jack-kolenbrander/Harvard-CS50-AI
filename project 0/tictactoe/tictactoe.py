@@ -26,8 +26,9 @@ def player(board):
     x_count = 0
     o_count = 0
     empty_count = 0
-    for row in board:
-        for cell in row:
+
+    for row in range(len(board)):
+        for cell in range(len(board[row])):
             if board[row][cell] == X:
                 x_count += 1
             elif board[row][cell] == O:
@@ -52,8 +53,8 @@ def actions(board):
     Returns set of all possible actions (i, j) available on the board.
     """
     actions = set()
-    for row in board:
-        for cell in row:
+    for row in range(len(board)):
+        for cell in range(len(board[row])):
             if board[row][cell] == EMPTY:
                 actions.add((row,cell))
     
@@ -113,8 +114,8 @@ def terminal(board):
     Returns True if game is over, False otherwise.
     """
     empty_count = 0
-    for row in board:
-        for cell in row:
+    for row in range(len(board)):
+        for cell in range(len(board[row])):
             if board[row][cell] == EMPTY:
                 empty_count += 1
     if winner(board) != None:
@@ -181,9 +182,9 @@ def minimax(board):
     if not terminal(board):
         if current_player == X:
             #get current actions
-            x_actions = actions(board)\
+            x_actions = actions(board)
             # set variables for max score and max action
-            max_score = ('-inf')
+            max_score = float('-inf')
             max_action = None
             # loop throug actions with min value function
             for action in x_actions:
@@ -196,12 +197,12 @@ def minimax(board):
             return max_action
         elif current_player == O:
             #get current actions
-            x_actions = actions(board)\
+            o_actions = actions(board)
             # set variables for max score and max action
-            min_score = ('inf')
+            min_score = float('inf')
             min_action = None
             # loop throug actions with min value function
-            for action in x_actions:
+            for action in o_actions:
                 score = max_value(result(board,action))
                 #if a new max score is found, update
                 if score < min_score:
