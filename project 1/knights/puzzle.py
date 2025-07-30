@@ -13,6 +13,11 @@ CKnave = Symbol("C is a Knave")
 # A says "I am both a knight and a knave."
 knowledge0 = And(
     # TODO
+    # Define that each is either a Knight or a Knave
+    And(Or(AKnight,AKnave),Not(And(AKnight,AKnave))),
+    #define puzzle logic, if its a Knight then statement is true, if Knave then statement is false
+    Implication(AKnight,And(AKnight,AKnave)),
+    Implication(AKnave,Not(And(AKnight,AKnave))),
 )
 
 # Puzzle 1
@@ -20,6 +25,12 @@ knowledge0 = And(
 # B says nothing.
 knowledge1 = And(
     # TODO
+    # Define that each is either a Knight or a Knave
+    And(Or(AKnight,AKnave),Not(And(AKnight,AKnave))),
+    And(Or(BKnight,BKnave),Not(And(BKnight,BKnave))),
+    #A says we are both knaves
+    Implication(AKnight,And(AKnave,BKnave)),
+    Implication(AKnave,Not(And(AKnave,BKnave)))
 )
 
 # Puzzle 2
@@ -27,6 +38,15 @@ knowledge1 = And(
 # B says "We are of different kinds."
 knowledge2 = And(
     # TODO
+    # Define that each is either a Knight or a Knave
+    And(Or(AKnight,AKnave),Not(And(AKnight,AKnave))),
+    And(Or(BKnight,BKnave),Not(And(BKnight,BKnave))),
+    # Define A, either both knights or both knaves
+    Implication(AKnight,Or(And(AKnight,BKnight),And(AKnave,BKnave))),
+    Implication(AKnave,Not(Or(And(AKnight,BKnight),And(AKnave,BKnave)))),
+    #Define B, that they are not the same
+    Implication(BKnight,Or(And(AKnight,BKnave),And(AKnave,BKnight))),
+    Implication(BKnave,Not(Or(And(AKnight,BKnave),And(AKnave,BKnight)))),
 )
 
 # Puzzle 3
@@ -36,6 +56,21 @@ knowledge2 = And(
 # C says "A is a knight."
 knowledge3 = And(
     # TODO
+    # Define that each is either a Knight or a Knave
+    And(Or(AKnight,AKnave),Not(And(AKnight,AKnave))),
+    And(Or(BKnight,BKnave),Not(And(BKnight,BKnave))),
+    And(Or(CKnight,CKnave),Not(And(CKnight,CKnave))),
+    #A's statement is unknown so no knowledge required to add
+    #Define B's Statements - A said I am a knave
+    Implication(BKnight,Implication(AKnight,AKnave)),
+    Implication(BKnight,Implication(AKnave,AKnight)),
+    #Implication(BKnave,Not(Implication(AKnight,AKnave))),
+    #C is a knave
+    Implication(BKnight,CKnave),
+    Implication(BKnave,CKnight),
+    #Define C's statement - A is a knight
+    Implication(CKnight,AKnight),
+    Implication(CKnave,AKnave),
 )
 
 
